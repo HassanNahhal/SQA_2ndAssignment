@@ -1,0 +1,93 @@
+body {
+    background: #EFEBE9;
+    text-align: center;
+    padding: 0 25px;
+}
+
+#main {
+    width: 500px;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 5px 50px 20px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
+}
+
+#main h1 {
+    margin-top: 0;
+    font-size: 35px;
+}
+
+#main ul {
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+#main .error {
+    border: 1px solid red;
+    background: #FDEFF0;
+    padding: 20px;
+}
+
+#main .success {
+    margin-top: 25px;
+}
+
+#main .success code {
+    font-size: 12px;
+    color: green;
+    line-height: 13px;
+}
+
+#main .chatBox {
+    background: #eee;
+    padding: 10px;
+    border: solid #ddd;
+    border-width: 1px;    
+}
+
+#main .error{
+    margin-bottom: 15px;
+}
+
+#main .chatArea{
+    font-size: 14px;
+}
+.BottomLine
+{
+    width: 600px;
+    margin: auto;    
+	background-color: #9E9E9E;
+	height: 5px;
+} 
+.bottom-title{
+	background: #F44336;
+	color:#ffffff;  
+    width: 580px;
+    height: 50px;
+    padding-left: 20px;
+    padding-top: 10px;
+    margin: auto;
+    font-size:13px;
+    text-align: left;
+}
+
+.darkRedLine{
+	background-color: #B71C1C;
+	height: 5px;
+	width: 600px;
+    margin: auto;
+}
+
+.top-title{
+    width: 600px;
+	background: #F44336;
+	color:#ffffff;  
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 10px;
+	font-size:35px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
