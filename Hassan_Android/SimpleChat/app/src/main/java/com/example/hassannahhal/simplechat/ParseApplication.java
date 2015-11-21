@@ -22,11 +22,5 @@ public class ParseApplication extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this,YOUR_APPLICATION_ID,YOUR_CLIENT_KEY);
 
-        /*
-        // Test creation of object
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-        */
     }
 }
