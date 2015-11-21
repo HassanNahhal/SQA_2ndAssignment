@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tvProfileLeft"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:background="#c3ff90"
+        android:paddingLeft="@dimen/list_left_margin"
+        android:textStyle="bold" />
+    <TextView
+        android:textSize="18sp"
+        android:id="@+id/tvBody"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+    </TextView>
+    <TextView
+        android:id="@+id/tvProfileRight"
+        android:layout_marginLeft="-64dp"
+        android:paddingLeft="@dimen/list_left_margin"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:background="#27baff" />
+</LinearLayout>
