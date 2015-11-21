@@ -11,21 +11,17 @@ namespace QAchat
     {
         static string user = "Ahmed";
         static string destenation = "All";
-        static string gMessage ="";
+        static string gMessage = "";
         static bool mPrivate = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                ParseClient.Initialize("lDaQeYKbUf46TqIV6hIg5FhAPgH1b4oVY8zStGTQ", "fvH4yCf8a82QxsNprO8hI6mcIvF4bPsIx35w5eg1");
-                //ParseClient.Initialize("WUXa2xvzApxSNu65oisCysyqWHahMjIVJ1o13TXq", "qi2N6r6EVxgTRHbXZhGBx0otPD1xcOMB4FrKl7y0");
+                ParseClient.Initialize("WUXa2xvzApxSNu65oisCysyqWHahMjIVJ1o13TXq", "qi2N6r6EVxgTRHbXZhGBx0otPD1xcOMB4FrKl7y0");
                 TextBox1.Text = user;
                 loadChatHistory();
             }
-
-                ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
-
-
+            ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
         }
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
@@ -96,22 +92,24 @@ namespace QAchat
         protected void Button1_Click(object sender, EventArgs e)
         {
             gMessage = TextBox3.Text;
-            if (gMessage != "") { 
-            if (!mPrivate)
-                ListBox1.Items.Add("Me [" + DateTime.Now.ToString() + "] : " + gMessage);
-            else if (TextBox2.Text != "") { 
-                ListBox1.Items.Add("Me [Private] to " + destenation + " [" + DateTime.Now.ToString() + "] : " + gMessage);
-            }
-            else
+            if (gMessage != "")
             {
-                Response.Write("<script LANGUAGE='JavaScript' >alert('Please enter destenation ID!')</script>");
-                return;
-            }
-            gMessage = TextBox3.Text.ToString();
-            sendMessage(user, destenation, gMessage, mPrivate);
-            ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
-            ListBox1.SelectedIndex = -1;
-            TextBox3.Text = "";
+                if (!mPrivate)
+                    ListBox1.Items.Add("Me [" + DateTime.Now.ToString() + "] : " + gMessage);
+                else if (TextBox2.Text != "")
+                {
+                    ListBox1.Items.Add("Me [Private] to " + destenation + " [" + DateTime.Now.ToString() + "] : " + gMessage);
+                }
+                else
+                {
+                    Response.Write("<script LANGUAGE='JavaScript' >alert('Please enter destenation ID!')</script>");
+                    return;
+                }
+                gMessage = TextBox3.Text.ToString();
+                sendMessage(user, destenation, gMessage, mPrivate);
+                ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
+                ListBox1.SelectedIndex = -1;
+                TextBox3.Text = "";
             }
             Response.Write("<script LANGUAGE='JavaScript' >alert('Please enter a message to send!')</script>");
 
@@ -129,8 +127,8 @@ namespace QAchat
 
         protected void Private_CheckedChanged(object sender, EventArgs e)
         {
-            
-                mPrivate = Private.Checked;
+
+            mPrivate = Private.Checked;
             if (!mPrivate)
                 destenation = "All";
         }
