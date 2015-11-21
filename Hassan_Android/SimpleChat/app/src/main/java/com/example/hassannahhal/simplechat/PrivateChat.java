@@ -21,18 +21,27 @@ import java.util.List;
 /**
  * Created by hassannahhal on 2015-11-20.
  */
-public class PrivateChat extends Activity{
+public class PrivateChat extends Activity {
 
     private EditText etMessage;
     private Button btSend;
-
     private ListView lvChat;
+
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
+
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
 
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final String PARSE_CREATED_AT = "createdAt";
+    private static final String PARSE_TO = "To";
+    private static final String PARSE_PRIVATE = "Private";
+    private static final String PARSE_ID = "Id";
+    private static final String USER_ID = "UserID";
+    private static final String TO_USER_ID = "ToUserID";
+    private static final int TIME_INTERVAL = 100;
+
 
     private static String sUserId, toUserId;
     private Handler handler = new Handler();
@@ -44,9 +53,8 @@ public class PrivateChat extends Activity{
         setContentView(R.layout.private_chat);
 
         Intent intent = getIntent();
-        sUserId = intent.getStringExtra("UserID");
-        toUserId = intent.getStringExtra("ToUserID");
-
+        sUserId = intent.getStringExtra(USER_ID);
+        toUserId = intent.getStringExtra(TO_USER_ID);
 
         refreshMessages();
         setupMessagePosting();
@@ -68,7 +76,6 @@ public class PrivateChat extends Activity{
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("onClick", "clickeeeed");
                 String body = etMessage.getText().toString();
                 // Use Message model to create new messages now
                 Message message = new Message();
@@ -76,7 +83,6 @@ public class PrivateChat extends Activity{
                 message.setMessageText(body);
                 message.setPrivateKey(true);
                 message.setToUser(toUserId);
-                Log.d("toUserId", "" + toUserId);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -85,7 +91,6 @@ public class PrivateChat extends Activity{
                 });
                 etMessage.setText("");
             }
-
         });
     }
 
@@ -94,7 +99,7 @@ public class PrivateChat extends Activity{
         @Override
         public void run() {
             refreshMessages();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, TIME_INTERVAL);
         }
     };
 
@@ -106,12 +111,12 @@ public class PrivateChat extends Activity{
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
         // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class).whereEqualTo("Private",true);
-        query.whereContains("Id",sUserId);
-        query.whereContains("To",toUserId);
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class).whereEqualTo(PARSE_PRIVATE, true);
+        query.whereContains(PARSE_ID, sUserId);
+        query.whereContains(PARSE_TO, toUserId);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByDescending("createdAt");
+        query.orderByAscending(PARSE_CREATED_AT);
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {

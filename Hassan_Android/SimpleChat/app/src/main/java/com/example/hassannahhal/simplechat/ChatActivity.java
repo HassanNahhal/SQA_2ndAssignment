@@ -27,12 +27,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends Activity {
-    private static final String TAG = ChatActivity.class.getName();
     private static String sUserId;
+    private static String userReceiverId;
 
-    public static final String USER_ID_KEY = "userId";
-    public static final String ChatMessages = "ChatMessages";
-    public static final String MY_ID = "Hassan";
+
+    private static final String TAG = ChatActivity.class.getName();
+    private static final String MY_ID = "Hassan";
+    private static final String PARSE_CREATED_AT = "createdAt";
+    private static final String PARSE_ALL = "All";
+    private static final String PARSE_USER_ID = "UserID";
+    private static final String TO_USER_ID = "ToUserID";
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int TIME_INTERVAL = 100;
+
 
     private EditText etMessage;
     private Button btSend;
@@ -43,7 +50,6 @@ public class ChatActivity extends Activity {
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
 
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
@@ -54,8 +60,6 @@ public class ChatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        lvChat = (ListView) findViewById(R.id.lvChat);
-
 
         // Register your parse models here
         ParseObject.registerSubclass(Message.class);
@@ -63,16 +67,8 @@ public class ChatActivity extends Activity {
 
         startWithCurrentUser();
 
-        /*
-        // User login
-        if (ParseUser.getCurrentUser() != null) { // start with existing user
-            startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
-            login();
-        }
-*/
         // Run the runnable object defined every 100ms
-        handler.postDelayed(runnable, 100);
+        handler.postDelayed(runnable, TIME_INTERVAL);
 
 
     }
@@ -82,7 +78,7 @@ public class ChatActivity extends Activity {
         @Override
         public void run() {
             refreshMessages();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, TIME_INTERVAL);
         }
     };
 
@@ -96,6 +92,7 @@ public class ChatActivity extends Activity {
     private void setupMessagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
+        lvChat = (ListView) findViewById(R.id.lvChat);
 
         mMessages = new ArrayList<Message>();
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
@@ -108,12 +105,11 @@ public class ChatActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent privateChat = new Intent(ChatActivity.this, PrivateChat.class);
-                privateChat.putExtra("UserID", sUserId);
-                if ((mMessages.get(position).getReceiverId() != null)&& ( mMessages.get(position).getUserId() !=sUserId) &&(mMessages.get(position).getReceiverId() !="All")){
-                    Log.d("Receiver ID"," " + mMessages.get(position).getReceiverId());
-
-                    Log.d("Value "," " + (mMessages.get(position).getReceiverId() =="All"));
-                    privateChat.putExtra("ToUserID", mMessages.get(position).getReceiverId());
+                privateChat.putExtra(PARSE_USER_ID, sUserId);
+                userReceiverId = mMessages.get(position).getReceiverId();
+                if ((mMessages.get(position).getReceiverId() != null) && (mMessages.get(position).getUserId() != sUserId) && (userReceiverId != PARSE_ALL)
+                        && mMessages.get(position).getReceiverId() != "") {
+                    privateChat.putExtra(TO_USER_ID, userReceiverId);
                     startActivity(privateChat);
                 } else {
                     Toast.makeText(ChatActivity.this, "User have null ID",
@@ -130,7 +126,7 @@ public class ChatActivity extends Activity {
                 message.setId(sUserId);
                 message.setMessageText(body);
                 message.setPrivateKey(false);
-                message.setToUser("All");
+                message.setToUser(PARSE_ALL);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -146,11 +142,12 @@ public class ChatActivity extends Activity {
 
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
+
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending("createdAt");
+        query.orderByAscending(PARSE_CREATED_AT);
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {
@@ -192,33 +189,6 @@ public class ChatActivity extends Activity {
             }
         });
     }
-
-/*
-    // Setup button event handler which posts the entered message to Parse
-    private void setupMessagePosting() {
-        // Find the text field and button
-        etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
-        // When send button is clicked, create message object on Parse
-        btSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String data = etMessage.getText().toString();
-                ParseObject message = ParseObject.create("ChatMessages");
-                message.put(USER_ID_KEY, sUserId);
-                message.put("body", data);
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                etMessage.setText("");
-            }
-        });
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

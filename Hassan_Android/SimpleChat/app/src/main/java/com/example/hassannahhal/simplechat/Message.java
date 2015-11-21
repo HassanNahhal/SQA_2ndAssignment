@@ -10,10 +10,15 @@ import com.parse.ParseObject;
 @ParseClassName("ChatMessages")
 public class Message extends ParseObject {
 
+    private static final String PARSE_TO = "To";
+    private static final String PARSE_PRIVATE = "Private";
+    private static final String PARSE_ID = "Id";
+    private static final String PARSE_MESSAGE_TEXT = "MessageText";
+
     public String getUserId() {
         String id = "";
         try {
-            id = getString("Id");
+            id = getString(PARSE_ID);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } finally {
@@ -26,27 +31,37 @@ public class Message extends ParseObject {
     }
 
     public String getMessageText() {
-        return getString("MessageText");
+        return getString(PARSE_MESSAGE_TEXT);
     }
 
     public String getReceiverId() {
-        return getString("To");
+        String id = "";
+        try {
+            id = getString(PARSE_TO);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } finally {
+            if (id == null) {
+                id = "";
+            }
+        }
+        return id;
     }
 
     public void setId(String userId) {
-        put("Id", userId);
+        put(PARSE_ID, userId);
     }
 
     public void setMessageText(String MessageText) {
-        put("MessageText", MessageText);
+        put(PARSE_MESSAGE_TEXT, MessageText);
     }
 
     public void setPrivateKey(boolean isPrivate) {
-        put("Private", isPrivate);
+        put(PARSE_PRIVATE, isPrivate);
     }
 
     public void setToUser(String To) {
-        put("To", To);
+        put(PARSE_TO, To);
     }
 }
 
