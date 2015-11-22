@@ -22,3 +22,27 @@ c:\users\jmiaiaba\documents\visual studio 2015\Projects\QAchat\QAchat\bin\Parse.
 c:\users\jmiaiaba\documents\visual studio 2015\Projects\QAchat\QAchat\bin\Parse.NetFx45.dll
 c:\users\jmiaiaba\documents\visual studio 2015\Projects\QAchat\QAchat\bin\Parse.xml
 c:\users\jmiaiaba\documents\visual studio 2015\Projects\QAchat\QAchat\bin\Parse.NetFx45.xml
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\csc.exe
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\vbc.exe
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\VBCSCompiler.exe
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\QAchat.dll.config
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\QAchat.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\QAchat.pdb
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Parse.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Parse.NetFx45.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Parse.xml
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\bin\Parse.NetFx45.xml
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\obj\Debug\QAchat.csprojResolveAssemblyReference.cache
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\obj\Debug\QAchat.dll
+C:\Users\jmiaiaba\Documents\GitHub\SQA_2ndAssignment\AhmedAljmiai_Web\QAchat\QAchat\obj\Debug\QAchat.pdb

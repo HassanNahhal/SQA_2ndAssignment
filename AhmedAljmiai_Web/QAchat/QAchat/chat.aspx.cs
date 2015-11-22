@@ -30,8 +30,21 @@ namespace QAchat
 
         protected async void loadChatHistory()
         {
-            ParseQuery<ParseObject> query = ParseObject.GetQuery("ChatMessages");
-            IEnumerable<ParseObject> results = await query.FindAsync();
+            ListBox1.Items.Clear();
+            //var query = new ParseQuery<ParseObject>("ChatMessages").OrderByDescending("createdAt").Limit(10);
+            //var query = ParseObject.GetQuery("ChatMessages").OrderByDescending("createdAt").Limit(10);
+            //ParseQuery<ParseObject> query = ParseQuery.("ChatMessages");
+            //var results = await query.FindAsync();
+            // Retrieve the most recent comments
+
+            var query = from chatMessages in ParseObject.GetQuery("ChatMessages")
+                                                   // Only retrieve the last 10 comments
+                                                   .Limit(100)
+                        orderby chatMessages.CreatedAt descending
+                        select chatMessages;
+
+            var results = await query.FindAsync();
+            results =results.OrderBy(x => x.CreatedAt);
             string MessageBody;
             string From;
             string To;
@@ -82,10 +95,20 @@ namespace QAchat
                     //MessageBox.Show(ex.ToString());
                     continue;
                 }
+                
             }
+           
+
+            //ListBox1.SelectedIndex = -1;
+            //ListBox1.Focus();
+            ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
         }
 
-
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            loadChatHistory();
+            UpdatePanel3.Update();
+        }
 
 
 
@@ -107,10 +130,12 @@ namespace QAchat
                 }
                 gMessage = TextBox3.Text.ToString();
                 sendMessage(user, destenation, gMessage, mPrivate);
+                ListBox1.Focus();
                 ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
-                ListBox1.SelectedIndex = -1;
                 TextBox3.Text = "";
+                TextBox3.Focus();
             }
+            else
             Response.Write("<script LANGUAGE='JavaScript' >alert('Please enter a message to send!')</script>");
 
         }
