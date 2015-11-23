@@ -8,7 +8,30 @@ $(document).ready(function(){
     setInterval(getMessage, 1000);
 });
 
+function checkBlankValue(){
+    
+    if($("#chatID").val() == ""){
+        alert("Please enter the 'From ID'.");
+        $("#chatID").focus();
+        return false;
+    }
+        if($("#toID").val() == ""){
+        alert("Please enter the 'To ID'."); 
+        $("#toID").focus();
+        return false;
+    }
+    if($("#inputText").val() == ""){
+        alert("Please enter the 'Message'.");
+        $("#inputText").focus();
+        return false;
+    }
+    return true;
+}
+
 function sendMessage(){	
+    
+    if(!checkBlankValue())
+        return;
 
     var ChatObject = Parse.Object.extend("ChatMessages");
     var chatObject = new ChatObject();        
@@ -36,6 +59,11 @@ function sendMessage(){
     });	
 }
 
+// Define the meaningful constant number to display the chatting list
+// Deu to it is more efficient to limited line in stead of all history of chatting list.
+var globalMaximumQueryList = 20;
+var glogalMaximumDisplayChattingList = 10;
+
 function getMessage(){
     
     var myID = $("#chatID").val(); 
@@ -45,7 +73,7 @@ function getMessage(){
     var getChat = new Parse.Query(GetChat);
     
     getChat.descending("createdAt");
-    getChat.limit(20);
+    getChat.limit(globalMaximumQueryList);
         
     getChat.find({
         success: function(results){
@@ -54,21 +82,21 @@ function getMessage(){
             
             $(results).each(function(i,e){
 
-                var q = e.toJSON();
+                var query = e.toJSON();
                 
-                var sendID = encodeHTML(q.Id);
-                var toID = encodeHTML(q.To);
-                var txtMsg = encodeHTML(q.MessageText);
+                var sendID = encodeHTML(query.Id);
+                var toID = encodeHTML(query.To);
+                var txtMsg = encodeHTML(query.MessageText);
                 var txtPrivate = "";  
                 var chatLine = "";
                 var tempLine = "";
                 
-                if(q.Private)
+                if(query.Private)
                     txtPrivate = " {Private}";
                 
                 tempLine = "<strong>" + sendID + txtPrivate + " - </strong> " + txtMsg + "<br>"; 
                 
-                if(q.Private){
+                if(query.Private){
                     if(myID == toID || myID == sendID){
                         chatLine = tempLine; 
                         listCount ++;
@@ -78,9 +106,9 @@ function getMessage(){
                     listCount ++;
                 }
                 
-                if(listCount <= 10){
+                if(listCount <= glogalMaximumDisplayChattingList){
                     $("#chatList").append(chatLine);
-                }                
+                }else{ return;}                
             });  
         },
         error: function(results, error){
