@@ -2,27 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
+
     <ImageView
         android:id="@+id/ivProfileLeft"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:contentDescription="@string/profile_other"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
         android:src="@mipmap/ic_launcher" />
+
     <TextView
-        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:layout_marginTop="-28dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
         android:id="@+id/tvBody"
-        android:padding="20dp"
-        android:lines="3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginRight="64dp"
-        android:layout_width="match_parent"
-        android:layout_height="64dp">
-    </TextView>
+        android:lines="3"
+        android:padding="20dp"
+        android:textSize="16sp"
+        android:layout_marginTop="00dp"></TextView>
+
     <ImageView
         android:id="@+id/ivProfileRight"
-        android:contentDescription="@string/profile_me"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="-64dp"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:contentDescription="@string/profile_me"
         android:src="@mipmap/ic_launcher" />
 </LinearLayout>

@@ -35,33 +35,47 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
             holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
             holder.body = (TextView) convertView.findViewById(R.id.tvBody);
+            holder.id = (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
         }
         final Message message = (Message) getItem(position);
-        //if (message.getIsPrivate() == false) {
-
         final ViewHolder holder = (ViewHolder) convertView.getTag();
         final boolean isMe = message.getUserId().equals(mUserId);
+
+
+
+        /*
+        *
+        * To Add Magrins programmatically
+        * *
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+                params.setMargins(600, -60, 0, 0);
+
+        */
+
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
             holder.imageRight.setVisibility(View.VISIBLE);
             holder.imageLeft.setVisibility(View.GONE);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            holder.id.setVisibility(View.GONE);
+
+
         } else {
             holder.imageLeft.setVisibility(View.VISIBLE);
             holder.imageRight.setVisibility(View.GONE);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            holder.id.setText(message.getUserId());
         }
 
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
         Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
         holder.body.setText(message.getMessageText());
-        //}
 
-        // else {
-        //  convertView=null;
-        // }
         return convertView;
 
     }
@@ -84,6 +98,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         public ImageView imageLeft;
         public ImageView imageRight;
         public TextView body;
+        public TextView id;
     }
 
 }

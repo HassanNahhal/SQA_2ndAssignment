@@ -67,7 +67,8 @@ public class PrivateChat extends Activity {
         btSend = (Button) findViewById(R.id.privateChatbtSend);
 
         mMessages = new ArrayList<Message>();
-        // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
+        // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen.
+        // Don't scroll to the bottom otherwise.
         lvChat = (ListView) findViewById(R.id.privateChatlv);
         lvChat.setTranscriptMode(1);
         mFirstLoad = true;
@@ -111,12 +112,15 @@ public class PrivateChat extends Activity {
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
         // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class).whereEqualTo(PARSE_PRIVATE, true);
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.whereEqualTo(PARSE_PRIVATE, true);
         query.whereContains(PARSE_ID, sUserId);
         query.whereContains(PARSE_TO, toUserId);
+
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.orderByAscending(PARSE_CREATED_AT);
+
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {

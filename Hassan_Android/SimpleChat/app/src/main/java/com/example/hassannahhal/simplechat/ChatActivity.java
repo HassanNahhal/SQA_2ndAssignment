@@ -32,12 +32,12 @@ public class ChatActivity extends Activity {
 
 
     private static final String TAG = ChatActivity.class.getName();
-    private static final String MY_ID = "Hassan";
     private static final String PARSE_CREATED_AT = "createdAt";
     private static final String PARSE_ALL = "All";
     private static final String PARSE_USER_ID = "UserID";
     private static final String TO_USER_ID = "ToUserID";
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final String MY_ID = "id";
     private static final int TIME_INTERVAL = 100;
 
 
@@ -63,7 +63,6 @@ public class ChatActivity extends Activity {
 
         // Register your parse models here
         ParseObject.registerSubclass(Message.class);
-
 
         startWithCurrentUser();
 
@@ -107,8 +106,8 @@ public class ChatActivity extends Activity {
                 Intent privateChat = new Intent(ChatActivity.this, PrivateChat.class);
                 privateChat.putExtra(PARSE_USER_ID, sUserId);
                 userReceiverId = mMessages.get(position).getReceiverId();
-                if ((mMessages.get(position).getReceiverId() != null) && (mMessages.get(position).getUserId() != sUserId) && (userReceiverId != PARSE_ALL)
-                        && mMessages.get(position).getReceiverId() != "") {
+                if ((mMessages.get(position).getReceiverId() != null) && (mMessages.get(position).getUserId() != sUserId) &&
+                        (userReceiverId != PARSE_ALL) && mMessages.get(position).getReceiverId() != "") {
                     privateChat.putExtra(TO_USER_ID, userReceiverId);
                     startActivity(privateChat);
                 } else {
@@ -171,7 +170,8 @@ public class ChatActivity extends Activity {
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
         //sUserId = ParseUser.getCurrentUser().getObjectId();
-        sUserId = MY_ID;
+        Intent intent = getIntent();
+        sUserId = intent.getStringExtra(MY_ID);
         setupMessagePosting();
 
     }
