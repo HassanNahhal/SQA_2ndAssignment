@@ -151,6 +151,9 @@ public class ChatActivity extends Activity {
         message.saveInBackground(new SaveCallback() {
           @Override
           public void done(ParseException e) {
+            if ((e != null) && (e.getCode() == ParseException.CONNECTION_FAILED)) {
+              Toast.makeText(getApplicationContext(), getString(R.string.pending), Toast.LENGTH_SHORT).show();
+            }
             receiveMessage();
           }
         });
@@ -177,7 +180,7 @@ public class ChatActivity extends Activity {
           mMessages.clear();
 
           // Iterate in reverse.
-          for (int index = messages.size()-1; index >=0; index--){
+          for (int index = messages.size() - 1; index >= 0; index--) {
             mMessages.add(messages.get(index));
           }
 
@@ -193,6 +196,22 @@ public class ChatActivity extends Activity {
         }
       }
     });
+  }
+
+  private int checkIDDuplication(String id) {
+    int result;
+    ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+    query.whereEqualTo(USER_ID_KEY, id);
+     // Execute query to fetch all messages from Parse asynchronously
+    // This is equivalent to a SELECT query with SQL
+
+    try {
+      result = query.count();
+      return result;
+    }
+    catch (  ParseException e) {
+      return 0;
+    }
   }
 
   private void restorePreferences() {
@@ -211,6 +230,7 @@ public class ChatActivity extends Activity {
   }
 
   private void GetUserID() {
+
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setTitle(R.string.getUserId);
 
@@ -225,13 +245,18 @@ public class ChatActivity extends Activity {
     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
+        int result;
         sUserId = input.getText().toString();
-
-        //todo update member variable of array adapter
-        mAdapter.mUserId = sUserId;
-
-        savePreferences();
-        Toast.makeText(getApplicationContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
+        result = checkIDDuplication(sUserId);
+        if (result > 0) {
+          Toast.makeText(getApplicationContext(), getString(R.string.duplicated), Toast.LENGTH_SHORT).show();
+          GetUserID();
+        } else {
+          //todo update member variable of array adapter
+          mAdapter.mUserId = sUserId;
+          savePreferences();
+          Toast.makeText(getApplicationContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
+        }
       }
     });
     builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

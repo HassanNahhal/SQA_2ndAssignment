@@ -28,6 +28,8 @@
     <string name="saved">Saved</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="pending">Message sending is pending</string>
+    <string name="duplicated">User Id is duplicated. Please try again</string>
     <string name="changeid">Change User ID</string>
     <string name="title_activity_private_mode">PrivateModeActivity</string>
 

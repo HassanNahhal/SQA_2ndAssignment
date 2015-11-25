@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -100,6 +101,9 @@ public class PrivateModeActivity extends Activity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
+                        if ((e != null) && (e.getCode() == ParseException.CONNECTION_FAILED)) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.pending), Toast.LENGTH_SHORT).show();
+                        }
                         receiveMessage();
                     }
                 });
