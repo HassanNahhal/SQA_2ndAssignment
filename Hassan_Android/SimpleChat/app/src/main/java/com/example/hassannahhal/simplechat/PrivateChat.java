@@ -33,7 +33,7 @@ public class PrivateChat extends Activity {
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
 
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 300;
     private static final String PARSE_CREATED_AT = "createdAt";
     private static final String PARSE_TO = "To";
     private static final String PARSE_PRIVATE = "Private";
@@ -111,6 +111,8 @@ public class PrivateChat extends Activity {
 
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
+
+        Log.d("in receiveMessage","in receiveMessage");
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         query.whereEqualTo(PARSE_PRIVATE, true);
