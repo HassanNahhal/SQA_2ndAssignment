@@ -9,6 +9,7 @@ namespace QAchat
 {
     public partial class chat : System.Web.UI.Page
     {
+        int NLMR = 100; //Number of last messages to be retrived
         static string user = "Ahmed";
         static string destenation = "All";
         static string gMessage = "";
@@ -23,10 +24,6 @@ namespace QAchat
             }
             ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
         }
-        protected void Page_LoadComplete(object sender, EventArgs e)
-        {
-
-        }
 
         protected async void loadChatHistory()
         {
@@ -39,7 +36,7 @@ namespace QAchat
 
             var query = from chatMessages in ParseObject.GetQuery("ChatMessages")
                                                    // Only retrieve the last 10 comments
-                                                   .Limit(100)
+                                                   .Limit(NLMR)
                         orderby chatMessages.CreatedAt descending
                         select chatMessages;
 
@@ -61,24 +58,21 @@ namespace QAchat
                     createdAt = messages.CreatedAt.ToString();
                     if (mChatPrivate && To != user)
                     {
+                        if(From == user)
+                            ListBox1.Items.Add("Me [Private] to " + To + " [" + createdAt + "] :" + MessageBody);
+                        else
                         continue;
                     }
                     else if (From == user)
                     {
-                        if (mChatPrivate)
-                        {
-                            ListBox1.Items.Add("Me [Private] to " + To + " [" + createdAt + "] :" + MessageBody);
-                        }
-                        else
-                        {
                             ListBox1.Items.Add("Me [" + createdAt + "] :" + MessageBody);
-                        }
+                        
                     }
                     else if (To == user)
                     {
                         if (mChatPrivate)
                         {
-                            ListBox1.Items.Add(From + " [Private] [" + createdAt + "] :" + MessageBody);
+                            ListBox1.Items.Add(From + " [Private] to Me [" + createdAt + "] :" + MessageBody);
                         }
                         else
                         {
@@ -114,6 +108,7 @@ namespace QAchat
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            
             gMessage = TextBox3.Text;
             if (gMessage != "")
             {
@@ -121,6 +116,7 @@ namespace QAchat
                     ListBox1.Items.Add("Me [" + DateTime.Now.ToString() + "] : " + gMessage);
                 else if (TextBox2.Text != "")
                 {
+                    destenation = TextBox2.Text;
                     ListBox1.Items.Add("Me [Private] to " + destenation + " [" + DateTime.Now.ToString() + "] : " + gMessage);
                 }
                 else
@@ -128,6 +124,7 @@ namespace QAchat
                     Response.Write("<script LANGUAGE='JavaScript' >alert('Please enter destenation ID!')</script>");
                     return;
                 }
+
                 gMessage = TextBox3.Text.ToString();
                 sendMessage(user, destenation, gMessage, mPrivate);
                 ListBox1.Focus();
@@ -142,6 +139,8 @@ namespace QAchat
 
         private async void sendMessage(string source, string destenation, string gMessage, bool mPrivate)
         {
+            if (mPrivate == false)
+                destenation = "All";
             ParseObject chatMessages = new ParseObject("ChatMessages");
             chatMessages["Id"] = source;
             chatMessages["To"] = destenation;
@@ -153,9 +152,16 @@ namespace QAchat
         protected void Private_CheckedChanged(object sender, EventArgs e)
         {
 
-            mPrivate = Private.Checked;
-            if (!mPrivate)
-                destenation = "All";
+                mPrivate = Private.Checked;
+                if (!mPrivate)
+                    destenation = "All";
+                else if(TextBox2.Text.Trim() != "")
+                    destenation = TextBox2.Text;
+
+
+
+
+
         }
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
@@ -165,7 +171,10 @@ namespace QAchat
 
         protected void TextBox2_TextChanged(object sender, EventArgs e)
         {
-
+            if (TextBox2.Text.Trim() != "")
+                destenation = TextBox2.Text;
+            else
+                destenation = "All";
         }
     }
 }

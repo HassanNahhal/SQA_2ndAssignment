@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Async="true"  AutoEventWireup="true" CodeBehind="chat.aspx.cs" Inherits="QAchat.chat" %>
+﻿<%@ Page Language="C#" Async="true" validateRequest="false" AutoEventWireup="true" CodeBehind="chat.aspx.cs" Inherits="QAchat.chat" %>
 
 <!DOCTYPE html>
 
@@ -21,7 +21,7 @@
         <br />
      <asp:Timer ID="Timer1" runat="server" Interval="3600" OnTick="Timer1_Tick">
 </asp:Timer>
-                <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                <asp:UpdatePanel ID="UpdatePanel3" runat="server"  UpdateMode="Conditional">
                 <ContentTemplate>
                 <asp:ListBox ID="ListBox1" runat="server" Height="154px" Width="100%" ></asp:ListBox>
                     <br />
